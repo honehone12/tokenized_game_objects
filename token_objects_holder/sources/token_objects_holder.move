@@ -28,8 +28,8 @@ module token_objects_holder::token_objects_holder {
         vector::contains(&holder.tokens, &object::object_address(object))
     }
 
-    public fun add_to_holder<T: key>(holder: &mut TokenObjectsHolder<T>, object: Object<T>) {
-        let obj_addr = object::object_address(&object);
+    public fun add_to_holder<T: key>(holder: &mut TokenObjectsHolder<T>, object: &Object<T>) {
+        let obj_addr = object::object_address(object);
         if (vector::length(&holder.tokens) != 0) {
             assert!(
                 !vector::contains(&holder.tokens, &obj_addr),
@@ -39,11 +39,11 @@ module token_objects_holder::token_objects_holder {
         vector::push_back(&mut holder.tokens, obj_addr);
     }
 
-    public fun remove_from_holder<T: key>(holder: &mut TokenObjectsHolder<T>, object: Object<T>) {
+    public fun remove_from_holder<T: key>(holder: &mut TokenObjectsHolder<T>, object: &Object<T>) {
         if (vector::length(&holder.tokens) == 0) {
             return
         };
-        let obj_addr = object::object_address(&object);
+        let obj_addr = object::object_address(object);
         let (ok, idx) = vector::index_of(&holder.tokens, &obj_addr);
         assert!(
             ok,
@@ -87,12 +87,12 @@ module token_objects_holder::token_objects_holder {
             num_holds<TestToken>(&holder) == 0,
             0
         );
-        add_to_holder<TestToken>(&mut holder, obj);
+        add_to_holder<TestToken>(&mut holder, &obj);
         assert!(
             num_holds<TestToken>(&holder) == 1 && holds(&holder, &obj),
             1
         );
-        remove_from_holder<TestToken>(&mut holder, obj);
+        remove_from_holder<TestToken>(&mut holder, &obj);
         assert!(
             num_holds<TestToken>(&holder) == 0 && !holds(&holder, &obj),
             2
@@ -111,8 +111,8 @@ module token_objects_holder::token_objects_holder {
         move_to(&obj_signer, TestToken{});
         let obj = object::object_from_constructor_ref(&cctor);
         let holder = new<TestToken>();
-        add_to_holder<TestToken>(&mut holder, obj);
-        add_to_holder<TestToken>(&mut holder, obj);
+        add_to_holder<TestToken>(&mut holder, &obj);
+        add_to_holder<TestToken>(&mut holder, &obj);
         TokenObjectsHolder<TestToken>{tokens: _} = holder;
     }
 
@@ -127,14 +127,14 @@ module token_objects_holder::token_objects_holder {
         move_to(&obj_signer, TestToken{});
         let obj = object::object_from_constructor_ref(&cctor);
         let holder = new<TestToken>();
-        add_to_holder<TestToken>(&mut holder, obj);
+        add_to_holder<TestToken>(&mut holder, &obj);
         let cctor = object::create_named_object(account, b"testobj");
         let obj_signer = object::generate_signer(&cctor);
         move_to(&obj_signer, TestToken{});
         let obj = object::object_from_constructor_ref(&cctor);
-        add_to_holder<TestToken>(&mut holder, obj);
-        remove_from_holder<TestToken>(&mut holder, obj);
-        remove_from_holder<TestToken>(&mut holder, obj);
+        add_to_holder<TestToken>(&mut holder, &obj);
+        remove_from_holder<TestToken>(&mut holder, &obj);
+        remove_from_holder<TestToken>(&mut holder, &obj);
         TokenObjectsHolder<TestToken>{tokens: _} = holder;
     }
 
@@ -145,7 +145,7 @@ module token_objects_holder::token_objects_holder {
         move_to(&obj_signer, TestToken{});
         let obj = object::object_from_constructor_ref(&cctor);
         let holder = new<TestToken>();
-        add_to_holder<TestToken>(&mut holder, obj);
+        add_to_holder<TestToken>(&mut holder, &obj);
 
         object::transfer(account, obj, @234);
         assert!(

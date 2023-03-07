@@ -186,6 +186,20 @@ module character_cards::character_cards {
         );
     }
 
+    inline fun assert_slot_is_empty<T: key>(slot: &Option<Object<T>>) {
+        assert!(
+            option::is_none(slot),
+            error::already_exists(E_ALREADY_FILLED)
+        );
+    }
+
+    inline fun assert_slot_is_filled<T: key>(slot: &Option<Object<T>>) {
+        assert!(
+            option::is_some(slot),
+            error::invalid_argument(E_EMPTY)
+        );
+    }
+
     fun add_card_to_holder(new_owner: address, card: &Object<CharacterCard>)
     acquires CardHolder {
         let holder = borrow_global_mut<CardHolder>(new_owner);
@@ -685,10 +699,7 @@ module character_cards::character_cards {
         assert_object_owner(card_obj, owner_addr);
         assert_object_owner(character_obj, owner_addr);
         let card = borrow_global_mut<CharacterCard>(object::object_address(card_obj));
-        assert!(
-            option::is_none(&card.character),
-            error::already_exists(E_ALREADY_FILLED)
-        );
+        assert_slot_is_empty(&card.character);
         let chara = borrow_global_mut<Character>(object::object_address(character_obj));
         object::enable_ungated_transfer(&chara.transfer_config);
         option::fill(&mut card.character, *character_obj);
@@ -706,10 +717,7 @@ module character_cards::character_cards {
         let owner_addr = signer::address_of(owner);
         assert_object_owner(card_obj, owner_addr);
         let card = borrow_global_mut<CharacterCard>(object::object_address(card_obj));
-        assert!(
-            option::is_some(&card.character),
-            error::invalid_argument(E_EMPTY)
-        );
+        assert_slot_is_filled(&card.character);
         let stored_chara = option::extract(&mut card.character);
         assert_object_exists(&stored_chara);
         assert_object_owner(&stored_chara, object::object_address(card_obj));
@@ -734,10 +742,7 @@ module character_cards::character_cards {
         assert_object_owner(card_obj, owner_addr);
         assert_object_owner(attack_obj, owner_addr);
         let card = borrow_global_mut<CharacterCard>(object::object_address(card_obj));
-        assert!(
-            option::is_none(&card.attack),
-            error::already_exists(E_ALREADY_FILLED)
-        );
+        assert_slot_is_empty(&card.attack);
         let attack = borrow_global_mut<Attack>(object::object_address(attack_obj));
         object::enable_ungated_transfer(&attack.transfer_config);
         option::fill(&mut card.attack, *attack_obj);
@@ -755,10 +760,7 @@ module character_cards::character_cards {
         let owner_addr = signer::address_of(owner);
         assert_object_owner(card_obj, owner_addr);
         let card = borrow_global_mut<CharacterCard>(object::object_address(card_obj));
-        assert!(
-            option::is_some(&card.attack),
-            error::invalid_argument(E_EMPTY)
-        );
+        assert_slot_is_filled(&card.attack);
         let stored_attack = option::extract(&mut card.attack);
         assert_object_exists(&stored_attack);
         assert_object_owner(&stored_attack, object::object_address(card_obj));
@@ -783,10 +785,7 @@ module character_cards::character_cards {
         assert_object_owner(card_obj, owner_addr);
         assert_object_owner(defense_obj, owner_addr);
         let card = borrow_global_mut<CharacterCard>(object::object_address(card_obj));
-        assert!(
-            option::is_none(&card.defense),
-            error::already_exists(E_ALREADY_FILLED)
-        );
+        assert_slot_is_empty(&card.defense);
         let defense = borrow_global_mut<Defense>(object::object_address(defense_obj));
         object::enable_ungated_transfer(&defense.transfer_config);
         option::fill(&mut card.defense, *defense_obj);
@@ -804,10 +803,7 @@ module character_cards::character_cards {
         let owner_addr = signer::address_of(owner);
         assert_object_owner(card_obj, owner_addr);
         let card = borrow_global_mut<CharacterCard>(object::object_address(card_obj));
-        assert!(
-            option::is_some(&card.defense),
-            error::invalid_argument(E_EMPTY)
-        );
+        assert_slot_is_filled(&card.defense);
         let stored_defense = option::extract(&mut card.defense);
         assert_object_exists(&stored_defense);
         assert_object_owner(&stored_defense, object::object_address(card_obj));
@@ -832,10 +828,7 @@ module character_cards::character_cards {
         assert_object_owner(card_obj, owner_addr);
         assert_object_owner(cost_obj, owner_addr);
         let card = borrow_global_mut<CharacterCard>(object::object_address(card_obj));
-        assert!(
-            option::is_none(&card.cost),
-            error::already_exists(E_ALREADY_FILLED)
-        );
+        assert_slot_is_empty(&card.cost);
         let cost = borrow_global_mut<Cost>(object::object_address(cost_obj));
         object::enable_ungated_transfer(&cost.transfer_config);
         option::fill(&mut card.cost, *cost_obj);
@@ -853,10 +846,7 @@ module character_cards::character_cards {
         let owner_addr = signer::address_of(owner);
         assert_object_owner(card_obj, owner_addr);
         let card = borrow_global_mut<CharacterCard>(object::object_address(card_obj));
-        assert!(
-            option::is_some(&card.cost),
-            error::invalid_argument(E_EMPTY)
-        );
+        assert_slot_is_filled(&card.cost);
         let stored_cost = option::extract(&mut card.cost);
         assert_object_exists(&stored_cost);
         assert_object_owner(&stored_cost, object::object_address(card_obj));
@@ -881,10 +871,7 @@ module character_cards::character_cards {
         assert_object_owner(card_obj, owner_addr);
         assert_object_owner(attribute_obj, owner_addr);
         let card = borrow_global_mut<CharacterCard>(object::object_address(card_obj));
-        assert!(
-            option::is_none(&card.attribute),
-            error::already_exists(E_ALREADY_FILLED)
-        );
+        assert_slot_is_empty(&card.attribute);
         let attribute = borrow_global_mut<Attribute>(object::object_address(attribute_obj));
         object::enable_ungated_transfer(&attribute.transfer_config);
         option::fill(&mut card.attribute, *attribute_obj);
@@ -902,10 +889,7 @@ module character_cards::character_cards {
         let owner_addr = signer::address_of(owner);
         assert_object_owner(card_obj, owner_addr);
         let card = borrow_global_mut<CharacterCard>(object::object_address(card_obj));
-        assert!(
-            option::is_some(&card.attribute),
-            error::invalid_argument(E_EMPTY)
-        );
+        assert_slot_is_filled(&card.attribute);
         let stored_attribute = option::extract(&mut card.attribute);
         assert_object_exists(&stored_attribute);
         assert_object_owner(&stored_attribute, object::object_address(card_obj));
@@ -930,10 +914,7 @@ module character_cards::character_cards {
         assert_object_owner(card_obj, owner_addr);
         assert_object_owner(ability_obj, owner_addr);
         let card = borrow_global_mut<CharacterCard>(object::object_address(card_obj));
-        assert!(
-            option::is_none(&card.special_ability),
-            error::already_exists(E_ALREADY_FILLED)
-        );
+        assert_slot_is_empty(&card.special_ability);
         let ability = borrow_global_mut<SpecialAbility>(object::object_address(ability_obj));
         object::enable_ungated_transfer(&ability.transfer_config);
         option::fill(&mut card.special_ability, *ability_obj);
@@ -951,10 +932,7 @@ module character_cards::character_cards {
         let owner_addr = signer::address_of(owner);
         assert_object_owner(card_obj, owner_addr);
         let card = borrow_global_mut<CharacterCard>(object::object_address(card_obj));
-        assert!(
-            option::is_some(&card.special_ability),
-            error::invalid_argument(E_EMPTY)
-        );
+        assert_slot_is_filled(&card.special_ability);
         let stored_ability = option::extract(&mut card.special_ability);
         assert_object_exists(&stored_ability);
         assert_object_owner(&stored_ability, object::object_address(card_obj));

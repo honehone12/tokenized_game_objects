@@ -700,7 +700,7 @@ module character_cards::character_cards {
         assert_object_owner(character_obj, owner_addr);
         let card = borrow_global_mut<CharacterCard>(object::object_address(card_obj));
         assert_slot_is_empty(&card.character);
-        let chara = borrow_global_mut<Character>(object::object_address(character_obj));
+        let chara = borrow_global<Character>(object::object_address(character_obj));
         object::enable_ungated_transfer(&chara.transfer_config);
         option::fill(&mut card.character, *character_obj);
         object::transfer_to_object(owner, *character_obj, *card_obj);
@@ -723,7 +723,7 @@ module character_cards::character_cards {
         assert_object_owner(&stored_chara, object::object_address(card_obj));
         object::enable_ungated_transfer(&card.transfer_config);
         object::transfer(owner, stored_chara, owner_addr);
-        let chara = borrow_global_mut<Character>(object::object_address(&stored_chara));
+        let chara = borrow_global<Character>(object::object_address(&stored_chara));
         object::disable_ungated_transfer(&chara.transfer_config);
         object::disable_ungated_transfer(&card.transfer_config);
         let holder = borrow_global_mut<CardHolder>(owner_addr);
@@ -743,7 +743,7 @@ module character_cards::character_cards {
         assert_object_owner(attack_obj, owner_addr);
         let card = borrow_global_mut<CharacterCard>(object::object_address(card_obj));
         assert_slot_is_empty(&card.attack);
-        let attack = borrow_global_mut<Attack>(object::object_address(attack_obj));
+        let attack = borrow_global<Attack>(object::object_address(attack_obj));
         object::enable_ungated_transfer(&attack.transfer_config);
         option::fill(&mut card.attack, *attack_obj);
         object::transfer_to_object(owner, *attack_obj, *card_obj);
@@ -766,7 +766,7 @@ module character_cards::character_cards {
         assert_object_owner(&stored_attack, object::object_address(card_obj));
         object::enable_ungated_transfer(&card.transfer_config);
         object::transfer(owner, stored_attack, owner_addr);
-        let attack = borrow_global_mut<Attack>(object::object_address(&stored_attack));
+        let attack = borrow_global<Attack>(object::object_address(&stored_attack));
         object::disable_ungated_transfer(&attack.transfer_config);
         object::disable_ungated_transfer(&card.transfer_config);
         let holder = borrow_global_mut<CardHolder>(owner_addr);
@@ -786,7 +786,7 @@ module character_cards::character_cards {
         assert_object_owner(defense_obj, owner_addr);
         let card = borrow_global_mut<CharacterCard>(object::object_address(card_obj));
         assert_slot_is_empty(&card.defense);
-        let defense = borrow_global_mut<Defense>(object::object_address(defense_obj));
+        let defense = borrow_global<Defense>(object::object_address(defense_obj));
         object::enable_ungated_transfer(&defense.transfer_config);
         option::fill(&mut card.defense, *defense_obj);
         object::transfer_to_object(owner, *defense_obj, *card_obj);
@@ -809,7 +809,7 @@ module character_cards::character_cards {
         assert_object_owner(&stored_defense, object::object_address(card_obj));
         object::enable_ungated_transfer(&card.transfer_config);
         object::transfer(owner, stored_defense, owner_addr);
-        let defense = borrow_global_mut<Defense>(object::object_address(&stored_defense));
+        let defense = borrow_global<Defense>(object::object_address(&stored_defense));
         object::disable_ungated_transfer(&defense.transfer_config);
         object::disable_ungated_transfer(&card.transfer_config);
         let holder = borrow_global_mut<CardHolder>(owner_addr);
@@ -829,7 +829,7 @@ module character_cards::character_cards {
         assert_object_owner(cost_obj, owner_addr);
         let card = borrow_global_mut<CharacterCard>(object::object_address(card_obj));
         assert_slot_is_empty(&card.cost);
-        let cost = borrow_global_mut<Cost>(object::object_address(cost_obj));
+        let cost = borrow_global<Cost>(object::object_address(cost_obj));
         object::enable_ungated_transfer(&cost.transfer_config);
         option::fill(&mut card.cost, *cost_obj);
         object::transfer_to_object(owner, *cost_obj, *card_obj);
@@ -852,7 +852,7 @@ module character_cards::character_cards {
         assert_object_owner(&stored_cost, object::object_address(card_obj));
         object::enable_ungated_transfer(&card.transfer_config);
         object::transfer(owner, stored_cost, owner_addr);
-        let cost = borrow_global_mut<Cost>(object::object_address(&stored_cost));
+        let cost = borrow_global<Cost>(object::object_address(&stored_cost));
         object::disable_ungated_transfer(&cost.transfer_config);
         object::disable_ungated_transfer(&card.transfer_config);
         let holder = borrow_global_mut<CardHolder>(owner_addr);
@@ -872,7 +872,7 @@ module character_cards::character_cards {
         assert_object_owner(attribute_obj, owner_addr);
         let card = borrow_global_mut<CharacterCard>(object::object_address(card_obj));
         assert_slot_is_empty(&card.attribute);
-        let attribute = borrow_global_mut<Attribute>(object::object_address(attribute_obj));
+        let attribute = borrow_global<Attribute>(object::object_address(attribute_obj));
         object::enable_ungated_transfer(&attribute.transfer_config);
         option::fill(&mut card.attribute, *attribute_obj);
         object::transfer_to_object(owner, *attribute_obj, *card_obj);
@@ -895,7 +895,7 @@ module character_cards::character_cards {
         assert_object_owner(&stored_attribute, object::object_address(card_obj));
         object::enable_ungated_transfer(&card.transfer_config);
         object::transfer(owner, stored_attribute, owner_addr);
-        let attribute = borrow_global_mut<Attribute>(object::object_address(&stored_attribute));
+        let attribute = borrow_global<Attribute>(object::object_address(&stored_attribute));
         object::disable_ungated_transfer(&attribute.transfer_config);
         object::disable_ungated_transfer(&card.transfer_config);
         let holder = borrow_global_mut<CardHolder>(owner_addr);
@@ -915,7 +915,7 @@ module character_cards::character_cards {
         assert_object_owner(ability_obj, owner_addr);
         let card = borrow_global_mut<CharacterCard>(object::object_address(card_obj));
         assert_slot_is_empty(&card.special_ability);
-        let ability = borrow_global_mut<SpecialAbility>(object::object_address(ability_obj));
+        let ability = borrow_global<SpecialAbility>(object::object_address(ability_obj));
         object::enable_ungated_transfer(&ability.transfer_config);
         option::fill(&mut card.special_ability, *ability_obj);
         object::transfer_to_object(owner, *ability_obj, *card_obj);
@@ -938,7 +938,7 @@ module character_cards::character_cards {
         assert_object_owner(&stored_ability, object::object_address(card_obj));
         object::enable_ungated_transfer(&card.transfer_config);
         object::transfer(owner, stored_ability, owner_addr);
-        let ability = borrow_global_mut<SpecialAbility>(object::object_address(&stored_ability));
+        let ability = borrow_global<SpecialAbility>(object::object_address(&stored_ability));
         object::disable_ungated_transfer(&ability.transfer_config);
         object::disable_ungated_transfer(&card.transfer_config);
         let holder = borrow_global_mut<CardHolder>(owner_addr);

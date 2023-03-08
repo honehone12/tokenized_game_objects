@@ -9,7 +9,3 @@ TokenObjectsHolder = { local = "../token_objects_holder" }
 
 [addresses]
 character_cards = "0xcafe"
-#character_cards = "_"
-
-#[dev-addresses]
-#character_cards = "0xbeef"

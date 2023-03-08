@@ -1,5 +1,5 @@
 [package]
-name = 'CharacterCards'
+name = 'RockBands'
 version = '1.0.0'
 
 [dependencies]
@@ -8,8 +8,4 @@ TokenObjects = { local = "../../../aptos-core/aptos-move/move-examples/token_obj
 TokenObjectsHolder = { local = "../token_objects_holder" }
 
 [addresses]
-character_cards = "0xcafe"
-#character_cards = "_"
-
-#[dev-addresses]
-#character_cards = "0xbeef"
+rock_bands = "0xcafe"

@@ -27,7 +27,6 @@ module character_cards::character_cards {
 
     #[resource_group_member(group = ConfigGroup)]
     struct CardConfig has key {
-        collection_name: String,
         mutability_config: MutabilityConfig,
         collection_address: address
     }
@@ -46,7 +45,6 @@ module character_cards::character_cards {
 
     #[resource_group_member(group = ConfigGroup)]
     struct CharacterConfig has key {
-        collection_name: String,
         mutability_config: MutabilityConfig,
         collection_address: address
     }
@@ -60,7 +58,6 @@ module character_cards::character_cards {
 
     #[resource_group_member(group = ConfigGroup)]
     struct AttackConfig has key {
-        collection_name: String,
         mutability_config: MutabilityConfig,
         collection_address: address
     }
@@ -74,7 +71,6 @@ module character_cards::character_cards {
 
     #[resource_group_member(group = ConfigGroup)]
     struct DefenseConfig has key {
-        collection_name: String,
         mutability_config: MutabilityConfig,
         collection_address: address
     }
@@ -88,7 +84,6 @@ module character_cards::character_cards {
 
     #[resource_group_member(group = ConfigGroup)]
     struct CostConfig has key {
-        collection_name: String,
         mutability_config: MutabilityConfig,
         collection_address: address
     }
@@ -102,7 +97,6 @@ module character_cards::character_cards {
 
     #[resource_group_member(group = ConfigGroup)]
     struct AttributeConfig has key {
-        collection_name: String,
         mutability_config: MutabilityConfig,
         collection_address: address
     }
@@ -116,7 +110,6 @@ module character_cards::character_cards {
 
     #[resource_group_member(group = ConfigGroup)]
     struct SpecialAbilityConfig has key {
-        collection_name: String,
         mutability_config: MutabilityConfig,
         collection_address: address
     }
@@ -200,7 +193,7 @@ module character_cards::character_cards {
         );
     }
 
-    fun add_card_to_holder(new_owner: address, card: &Object<CharacterCard>)
+    inline fun add_card_to_holder(new_owner: address, card: &Object<CharacterCard>)
     acquires CardHolder {
         let holder = borrow_global_mut<CardHolder>(new_owner);
         assert!(
@@ -210,7 +203,7 @@ module character_cards::character_cards {
         token_objects_holder::add_to_holder(&mut holder.card_holder, card);
     }
 
-    fun remove_card_from_holder(previous_owner: address, card: &Object<CharacterCard>)
+    inline fun remove_card_from_holder(previous_owner: address, card: &Object<CharacterCard>)
     acquires CardHolder {
         let holder = borrow_global_mut<CardHolder>(previous_owner);
         assert!(
@@ -231,13 +224,12 @@ module character_cards::character_cards {
     }
 
     fun init_card(caller: &signer) {
-        let name = utf8(b"character-card-card-collection");
         let constructor = collection::create_fixed_collection(
             caller,
             utf8(b"base-card-collection-for-character-card"),
             1_000_000,
             collection::create_mutability_config(false, false),
-            name,
+            utf8(b"character-card-card-collection"),
             option::none(),
             utf8(b"----://character-card/base-card-collection"),
         );
@@ -245,7 +237,6 @@ module character_cards::character_cards {
         move_to(
             caller,
             CardConfig{
-                collection_name: name,
                 mutability_config: token::create_mutability_config(false, false, false),
                 collection_address: object::object_address(&obj)
             }    
@@ -253,13 +244,12 @@ module character_cards::character_cards {
     }
 
     fun init_character(caller: &signer) {
-        let name = utf8(b"character-card-character-collection");
         let constructor = collection::create_fixed_collection(
             caller,
             utf8(b"character-collection-for-character-card"),
             1_000_000,
             collection::create_mutability_config(false, false),
-            name,
+            utf8(b"character-card-character-collection"),
             option::none(),
             utf8(b"----://character-card/character-collection"),
         );
@@ -267,7 +257,6 @@ module character_cards::character_cards {
         move_to(
             caller,
             CharacterConfig{
-                collection_name: name,
                 mutability_config: token::create_mutability_config(false, false, false),
                 collection_address: object::object_address(&obj)
             }
@@ -275,13 +264,12 @@ module character_cards::character_cards {
     }
 
     fun init_attack(caller: &signer) {
-        let name = utf8(b"character-card-attack-collection");
         let constructor = collection::create_fixed_collection(
             caller,
             utf8(b"attack-collection-for-character-card"),
             1_000_000,
             collection::create_mutability_config(false, false),
-            name,
+            utf8(b"character-card-attack-collection"),
             option::none(),
             utf8(b"----://character-card/attack-collection"),
         );
@@ -289,7 +277,6 @@ module character_cards::character_cards {
         move_to(
             caller,
             AttackConfig{
-                collection_name: name,
                 mutability_config: token::create_mutability_config(false, false, false),
                 collection_address: object::object_address(&obj)
             }
@@ -297,13 +284,12 @@ module character_cards::character_cards {
     }
 
     fun init_defense(caller: &signer) {
-        let name = utf8(b"character-card-defense-collection");
         let constructor = collection::create_fixed_collection(
             caller,
             utf8(b"defense-collection-for-character-card"),
             1_000_000,
             collection::create_mutability_config(false, false),
-            name,
+            utf8(b"character-card-defense-collection"),
             option::none(),
             utf8(b"----://character-card/defense-collection"),
         );
@@ -311,7 +297,6 @@ module character_cards::character_cards {
         move_to(
             caller,
             DefenseConfig{
-                collection_name: name,
                 mutability_config: token::create_mutability_config(false, false, false),
                 collection_address: object::object_address(&obj)
             }
@@ -319,13 +304,12 @@ module character_cards::character_cards {
     }
 
     fun init_cost(caller: &signer) {
-        let name = utf8(b"character-card-cost-collection");
         let constructor = collection::create_fixed_collection(
             caller,
             utf8(b"cost-collection-for-character-card"),
             1_000_000,
             collection::create_mutability_config(false, false),
-            name,
+            utf8(b"character-card-cost-collection"),
             option::none(),
             utf8(b"----://character-card/cost-collection"),
         );
@@ -333,7 +317,6 @@ module character_cards::character_cards {
         move_to(
             caller,
             CostConfig{
-                collection_name: name,
                 mutability_config: token::create_mutability_config(false, false, false),
                 collection_address: object::object_address(&obj)
             }
@@ -341,13 +324,12 @@ module character_cards::character_cards {
     }
 
     fun init_attribute(caller: &signer) {
-        let name = utf8(b"character-card-Attribute-collection");
         let constructor = collection::create_fixed_collection(
             caller,
             utf8(b"attribute-collection-for-character-card"),
             1_000_000,
             collection::create_mutability_config(false, false),
-            name,
+            utf8(b"character-card-Attribute-collection"),
             option::none(),
             utf8(b"----://character-card/attribute-collection"),
         );
@@ -355,7 +337,6 @@ module character_cards::character_cards {
         move_to(
             caller,
             AttributeConfig{
-                collection_name: name,
                 mutability_config: token::create_mutability_config(false, false, false),
                 collection_address: object::object_address(&obj)
             }
@@ -363,13 +344,12 @@ module character_cards::character_cards {
     }
 
     fun init_special_ability(caller: &signer) {
-        let name = utf8(b"character-card-special-ability-collection");
         let constructor = collection::create_fixed_collection(
             caller,
             utf8(b"special-ability-collection-for-character-card"),
             1_000_000,
             collection::create_mutability_config(false, false),
-            name,
+            utf8(b"character-card-special-ability-collection"),
             option::none(),
             utf8(b"----://character-card/special-ability-collection"),
         );
@@ -377,7 +357,6 @@ module character_cards::character_cards {
         move_to(
             caller,
             SpecialAbilityConfig{
-                collection_name: name,
                 mutability_config: token::create_mutability_config(false, false, false),
                 collection_address: object::object_address(&obj)
             }
@@ -399,7 +378,7 @@ module character_cards::character_cards {
                 }
             )
         }
-    }
+    } 
 
     fun create_card(
         caller: &signer,
@@ -413,7 +392,7 @@ module character_cards::character_cards {
         let config = borrow_global<CardConfig>(@character_cards);
         let constructor = token::create_token(
             caller,
-            config.collection_name,
+            collection::name(object::address_to_object<Collection>(config.collection_address)),
             *description,
             config.mutability_config,
             *name,
@@ -456,7 +435,7 @@ module character_cards::character_cards {
         let config = borrow_global<CharacterConfig>(@character_cards);
         let constructor = token::create_token(
             caller,
-            config.collection_name,
+            collection::name(object::address_to_object<Collection>(config.collection_address)),
             *description,
             config.mutability_config,
             *token_name,
@@ -494,7 +473,7 @@ module character_cards::character_cards {
         let config = borrow_global<AttackConfig>(@character_cards);
         let constructor = token::create_token(
             caller,
-            config.collection_name,
+            collection::name(object::address_to_object<Collection>(config.collection_address)),
             *description,
             config.mutability_config,
             *name,
@@ -532,7 +511,7 @@ module character_cards::character_cards {
         let config = borrow_global<DefenseConfig>(@character_cards);
         let constructor = token::create_token(
             caller,
-            config.collection_name,
+            collection::name(object::address_to_object<Collection>(config.collection_address)),
             *description,
             config.mutability_config,
             *name,
@@ -570,7 +549,7 @@ module character_cards::character_cards {
         let config = borrow_global<CostConfig>(@character_cards);
         let constructor = token::create_token(
             caller,
-            config.collection_name,
+            collection::name(object::address_to_object<Collection>(config.collection_address)),
             *description,
             config.mutability_config,
             *name,
@@ -608,7 +587,7 @@ module character_cards::character_cards {
         let config = borrow_global<AttributeConfig>(@character_cards);
         let constructor = token::create_token(
             caller,
-            config.collection_name,
+            collection::name(object::address_to_object<Collection>(config.collection_address)),
             *description,
             config.mutability_config,
             *token_name,
@@ -646,7 +625,7 @@ module character_cards::character_cards {
         let config = borrow_global<SpecialAbilityConfig>(@character_cards);
         let constructor = token::create_token(
             caller,
-            config.collection_name,
+            collection::name(object::address_to_object<Collection>(config.collection_address)),
             *description,
             config.mutability_config,
             *token_name,

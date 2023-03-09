@@ -5,10 +5,10 @@ module rock_bands::rock_bands {
     
     #[resource_group_member(group = object::ObjectGroup)]
     struct Band has key {
-        guitar: Option<Object<Musician<Instrument<Guitar>>>>,
-        bass: Option<Object<Musician<Instrument<Bass>>>>,
-        drums: Option<Object<Musician<Instrument<Drums>>>>,
-        keyboard: Option<Object<Musician<Instrument<Keyboard>>>>
+        guitar: Option<Object<Musician<Guitar>>>,
+        bass: Option<Object<Musician<Bass>>>,
+        drums: Option<Object<Musician<Drums>>>,
+        keyboard: Option<Object<Musician<Keyboard>>>
     }
 
     #[resource_group_member(group = object::ObjectGroup)]

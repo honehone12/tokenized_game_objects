@@ -25,35 +25,21 @@ module basketball::baketball {
         accuracy: u64,
         tactics: u64,
 
-        pg_skill:  Option<Object<PointGuardSkill>>,
-        sg_skill: Option<Object<ShootingGuardSkill>>,
-        sf_skill: Option<Object<SmallForwwardSkill>>,
-        pf_skill: Option<Object<PowerForwardSkill>>,
-        c_skill: Option<Object<CenterSkill>>
+        pg_skill:  Option<Object<Skill<PointGuard>>>,
+        sg_skill: Option<Object<Skill<ShootingGuard>>>,
+        sf_skill: Option<Object<Skill<SmallForwward>>>,
+        pf_skill: Option<Object<Skill<PowerForward>>>,
+        c_skill: Option<Object<Skill<Center>>>
     }
 
     #[resource_group_member(group = object::ObjectGroup)]
-    struct PointGuardSkill has key {
+    struct Skill<phantom P> has key {
         value: u64
     }
 
-    #[resource_group_member(group = object::ObjectGroup)]
-    struct ShootingGuardSkill has key {
-        value: u64
-    }
-
-    #[resource_group_member(group = object::ObjectGroup)]
-    struct SmallForwwardSkill has key {
-        value: u64
-    }
-
-    #[resource_group_member(group = object::ObjectGroup)]
-    struct PowerForwardSkill has key {
-        value: u64
-    }
-
-    #[resource_group_member(group = object::ObjectGroup)]
-    struct CenterSkill has key {
-        value: u64
-    } 
+    struct PointGuard {}
+    struct ShootingGuard {}
+    struct SmallForwward {}
+    struct PowerForward {}
+    struct Center {} 
 }

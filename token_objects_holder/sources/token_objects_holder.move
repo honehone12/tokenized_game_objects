@@ -6,9 +6,6 @@ module token_objects_holder::token_objects_holder {
 
     const E_TOKEN_ALREADY_EXISTS: u64 = 1;
     const E_TOKEN_NOT_EXISTS: u64 = 2;
-    const E_HOLDER_NOT_EXISTS: u64 = 3;
-    const E_NOT_OWNER: u64 = 4;
-    const E_STILL_OWNER: u64 = 5;
 
     struct TokenObjectsHolder<phantom T: key> has store {
         tokens: vector<address>

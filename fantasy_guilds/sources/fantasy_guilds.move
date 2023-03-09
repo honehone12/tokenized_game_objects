@@ -17,7 +17,7 @@ module fantasy_guilds::fantasy_guilds {
         magical: u64,
 
         job: Option<Object<Slot<Job>>>,
-        skill: vector<Object<Skill>>,
+        skill: vector<Object<Slot<Skill>>>,
 
         weapon: Option<Object<Slot<Weapon>>>,
         protector: Option<Object<Slot<Protector>>>,

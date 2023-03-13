@@ -11,7 +11,9 @@ module combat_robbots::combat_robbots {
         right_shoulder: Option<Object<Unit<ShoulderUnit<Right>>>>,
         right_arm: Option<Object<Unit<ArmUnit<Right>>>>,
         left_shoulder: Option<Object<Unit<ShoulderUnit<Left>>>>,
-        left_arm: Option<Object<Unit<ArmUnit<Left>>>>
+        left_arm: Option<Object<Unit<ArmUnit<Left>>>>,
+        backpack: Option<Object<Unit<BackpackUnit>>>,
+        head: Option<Object<Unit<HeadUnit>>>
     }
 
     #[resource_group_member(group = object::ObjectGroup)]
@@ -44,6 +46,7 @@ module combat_robbots::combat_robbots {
     }
 
     struct HeadUnit has store {
+        scope: u64,
         armor: Option<Object<Armor<Head>>>
     }
 
